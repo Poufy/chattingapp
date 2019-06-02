@@ -25,17 +25,24 @@
       $(function () {
         var socket = io();
         $('form').submit(function(){
+	  //here we emit the message to the server which is handled with socket.on('chatmessage', ...
           socket.emit('chat message', $('#m').val());
           $('#m').val('');
           return false;
         });
+	//here we handle emitions that the server sends to all clients.
         socket.on('chat message', function(msg){
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
         });
-
+	//here we handle the emition from the server that someone has joined the server.
         socket.on('joined', function(){
-          $('#messages').append($('<li>').text('new user joined'));
+          $('#messages').append($('<li>').text('User has joined.'));
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+	//here we handle the emition from the server that someone has disconnected from the server.
+        socket.on('disconnect', function(){
+          $('#messages').append($('<li>').text('User has disconnected.'));
           window.scrollTo(0, document.body.scrollHeight);
         });
       });
