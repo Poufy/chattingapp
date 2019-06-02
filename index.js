@@ -9,7 +9,8 @@ res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', function(socket){
-
+console.log('new user joined');
+io.emit('joined', 'new user joined');
 socket.on('chat message', function(msg){
 console.log("chat message: " + msg);
 io.emit('chat message', msg);

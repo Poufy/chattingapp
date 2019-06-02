@@ -33,6 +33,11 @@
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
         });
+
+        socket.on('joined', function(){
+          $('#messages').append($('<li>').text('new user joined'));
+          window.scrollTo(0, document.body.scrollHeight);
+        });
       });
 
     </script>
