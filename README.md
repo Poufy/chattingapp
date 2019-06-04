@@ -17,3 +17,7 @@ node index.js
 
 
 and open your browser on http://localhost:3000/
+
+
+#TODO
+Instead of using the map for the user names just send the username to the server and emit it to all the other clients and handle the printing there.
