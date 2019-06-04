@@ -22,27 +22,34 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+	    var userName = prompt("Please enter your user name.");
+		if(userName == null)
+			userName = 'Unknown';
+	    var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       $(function () {
         var socket = io();
+        socket.emit('userID' , userName);
         $('form').submit(function(){
 	  //here we emit the message to the server which is handled with socket.on('chatmessage', ...
-          socket.emit('chat message', $('#m').val());
+          socket.emit('chat message', userName +': '+ $('#m').val());
           $('#m').val('');
           return false;
         });
 	//here we handle emitions that the server sends to all clients.
         socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(msg));
+          $('#messages').append($('<li>').text('['+ time +'] ' + msg));
           window.scrollTo(0, document.body.scrollHeight);
         });
 	//here we handle the emition from the server that someone has joined the server.
         socket.on('joined', function(){
-          $('#messages').append($('<li>').text('User has joined.'));
+          $('#messages').append($('<li>').text('['+ time +'] '+userName + ' has joined.'));
           window.scrollTo(0, document.body.scrollHeight);
         });
 	//here we handle the emition from the server that someone has disconnected from the server.
         socket.on('disconnect', function(){
-          $('#messages').append($('<li>').text('User has disconnected.'));
+		//here and above the userName should be the userName of the connected user not the one we entered.
+          $('#messages').append($('<li>').text('['+ time +'] '+ userName + ' has disconnected.'));
           window.scrollTo(0, document.body.scrollHeight);
         });
       });
