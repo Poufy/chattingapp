@@ -42,14 +42,14 @@
           window.scrollTo(0, document.body.scrollHeight);
         });
 	//here we handle the emition from the server that someone has joined the server.
-        socket.on('joined', function(){
-          $('#messages').append($('<li>').text('['+ time +'] '+userName + ' has joined.'));
+        socket.on('joined', function(user){
+          $('#messages').append($('<li>').text('['+ time +'] '+user + ' has joined.'));
           window.scrollTo(0, document.body.scrollHeight);
         });
 	//here we handle the emition from the server that someone has disconnected from the server.
-        socket.on('disconnect', function(){
+        socket.on('disconnect', function(user){
 		//here and above the userName should be the userName of the connected user not the one we entered.
-          $('#messages').append($('<li>').text('['+ time +'] '+ userName + ' has disconnected.'));
+          $('#messages').append($('<li>').text('['+ time +'] '+ user + ' has disconnected.'));
           window.scrollTo(0, document.body.scrollHeight);
         });
       });
